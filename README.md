@@ -450,5 +450,3 @@ All saved to backend via PUT.
 - Complete documentation
 
 ---
-
-**End of SPECIFICATION.md**
