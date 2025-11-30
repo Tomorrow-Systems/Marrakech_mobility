@@ -1,326 +1,453 @@
-# **Marrakech Mobility Projects – Interactive Web Platform (Flask + React)**  
-## **SPECIFICATION.md**
 
-## **1. Project Overview**
-
-### **1.1 Title**  
-**Marrakech Mobility Projects – Interactive Map & Timeline**
-
-### **1.2 Objective**  
-Develop a web application that showcases **mobility projects in Marrakech** using:
-
-- A **Landing Page** (non-map) that highlights project summaries, categories, and key statistics.
-- A separate **Map Page** with a fully interactive geospatial view.
-- Detailed project information (images, KPIs, connectivity).
-- Filters for status, category, district, and timeline.
-- Connectivity visualization between projects (corridors).
+# Marrakech Mobility Projects – Interactive Web Platform (Flask + React)
+## SPECIFICATION.md
 
 ---
 
-## **2. Target Users**
+## 1. Project Overview
 
+### 1.1 Title
+**Marrakech Mobility Projects – Interactive Map, Detailed Project Pages, Storytelling & Admin CMS**
+
+### 1.2 Objective
+Develop a fully interactive web application to showcase **Marrakech mobility projects**, with:
+
+- A **Landing Page** presenting achievements and categories.
+- An **Interactive Map** showing all projects with filters and connectivity.
+- A **Storytelling Page** explaining the evolution of mobility.
+- A dedicated **Project Detail Page** for every project (images, videos, metrics, descriptions).
+- An **Admin Page** to add/edit/delete projects and draw map geometries.
+- Full geospatial visualization (points, lines, polygons).
+- Full media support (images, videos, galleries).
+- Fully dynamic content stored in database or JSON.
+
+The goal is to give the public and decision‑makers an intuitive, rich, and informative view of all mobility-related efforts.
+
+---
+
+## 2. Target Users
+
+### 2.1 Public Users
 - **City Officials & Planners**
 - **Citizens & Residents**
 - **Transport Engineers & Consultants**
 - **Investors / Researchers / Students**
 
-Users should be able to:
+They want quick access to:
+- What projects exist?
+- What is done/in progress/planned?
+- Where are projects physically located?
+- How do projects connect?
+- What are the benefits?
 
-- Explore Done / In Progress / Future mobility projects.
-- See how projects connect structurally.
-- Understand progress visually on the map.
-- Discover summary information from the landing page.
+### 2.2 Professional Users
+- Engineers  
+- City planners  
+- Mobility consultants  
+- Investors  
 
----
+They need:
+- High‑level summaries  
+- Accurate geospatial data  
+- Connectivity between networks  
+- Detailed project pages  
 
-## **3. High-Level Architecture**
+### 2.3 Admin Users
+Responsible for:
+- Adding new projects  
+- Editing geometries  
+- Updating statuses  
+- Uploading images & videos  
+- Ensuring data accuracy  
 
-### **3.1 Pages**
-
-The platform consists of **two main pages**:
-
-- `/` → **Landing Page** (overview + summaries)
-- `/map` → **Interactive Map Page** (data visualization)
-
-### **3.2 Frontend (React SPA)**
-
-- Uses client-side routing to manage pages.
-- Fetches data from Flask API.
-- Components include:
-  - `<Navbar>`
-  - `<LandingHero>`
-  - `<KeyStatsSection>`
-  - `<StatusOverviewSection>`
-  - `<ProjectHighlightsSection>`
-  - `<ProjectCategoriesSection>`
-  - `<ProjectListPreview>`
-  - `<MapView>`
-  - `<FilterPanel>`
-  - `<ProjectList>`
-  - `<ProjectDetailPanel>`
-  - `<Legend>`
-  - `<CorridorOverlay>` (optional)
-
-### **3.3 Backend (Flask REST API)**
-
-- Serves JSON data:
-  - `/api/projects`
-  - `/api/projects/<id>`
-  - `/api/corridors` (optional)
-- Stores data initially in static JSON files (upgradable to DB later).
-- No HTML rendering; React handles UI.
-
-### **3.4 Data Storage**
-
-- Phase 1: JSON dataset (simple, fast for development)
-- Phase 2: Optional database (PostgreSQL/SQLite)
+Secure access via `/admin`.
 
 ---
 
-## **4. API Specification**
+## 3. High-Level Architecture
 
-Base URL: `/api`
+### 3.1 Pages / Routes
 
-### **4.1 GET /api/projects**
-
-Returns list of all mobility projects.
-
-**Optional query parameters:**
-
-- `status=done,in_progress,future`
-- `type=bhns,bus,cycling,intersection,pedestrian,parking,other`
-- `district=<string>`
-- `from_year=<year>`
-- `to_year=<year>`
-
-Used by:
-
-- Landing Page (stats, highlights, previews)
-- Map Page (initial dataset)
-- Filter operations
+| Route | Description |
+|-------|-------------|
+| `/` | Landing Page |
+| `/map` | Interactive Map Page |
+| `/story` | Storytelling Page |
+| `/projects/:id` | Full Project Detail Page |
+| `/admin` | Admin Dashboard (login + editor) |
+| `/admin/editor/:id` | Edit existing project |
+| `/admin/new` | Create new project |
 
 ---
 
-### **4.2 GET /api/projects/<id>**
+### 3.2 Frontend (React SPA)
 
-Returns full details of a single mobility project.
+Main components:
 
-Used by Map Page + Landing Page modals.
+**Global**
+- `Navbar`, `Footer`, theming
+
+**Landing Page**
+- Hero section  
+- Stats  
+- Highlights  
+- Categories  
+- Project Preview List  
+
+**Map Page**
+- MapView (Leaflet/Mapbox)  
+- FilterPanel  
+- ProjectList  
+- ProjectDetailPanel  
+- CorridorOverlay  
+- Legend  
+
+**Story Page**
+- StoryTimeline  
+- StoryChapters  
+- Chapter detail view  
+- Map CTA  
+- Project CTA  
+
+**Project Detail Page**
+- Header  
+- Meta Summary  
+- Image Gallery  
+- Video Section  
+- Full Description  
+- Connectivity Section  
+- Back to Map/Story Buttons  
+
+**Admin Page**
+- AdminLogin  
+- AdminProjectList  
+- AdminProjectForm  
+- AdminMapEditor (draw/edit geometry)  
+- Icon/Color Selector  
 
 ---
 
-### **4.3 GET /api/corridors** (optional)
+## 4. Backend Architecture (Flask)
 
-Returns corridor definitions (grouped projects).
+### 4.1 Public API Endpoints
+
+#### `GET /api/projects`
+Returns full list of projects.
+
+Supports filters:
+- `status`
+- `type`
+- `district`
+- `from_year`
+- `to_year`
+
+#### `GET /api/projects/<id>`
+Returns full project details including:
+- geometry
+- metrics
+- images
+- videos
+- connectivity
+- media URLs
+- descriptions
+
+#### `GET /api/corridors`
+Optional – geometric corridors linking multiple projects.
+
+#### `GET /api/stories`
+Optional – storytelling content.
 
 ---
 
-## **5. Data Model Specification (JSON)**
+### 4.2 Admin Endpoints (Protected)
 
-```json
+#### `POST /api/login`
+Authenticates admin.
+
+#### `POST /api/projects`
+Creates new project.
+
+#### `PUT /api/projects/<id>`
+Edits project.
+
+#### `DELETE /api/projects/<id>`
+Deletes project.
+
+#### `POST /api/upload`
+(Optional) Handle media uploads.
+
+---
+
+## 5. Data Model
+
+### 5.1 Project Model (Extended)
+
+```
 {
   "id": "BHNS_L5",
   "name": "Ligne BHNS L5",
   "status": "in_progress",
   "type": "bhns",
+  "district": "Gueliz",
+
   "geometry": {
     "type": "LineString",
     "coordinates": []
   },
-  "district": "Gueliz",
-  "description": "Projet de ligne BHNS pour améliorer la mobilité structurante...",
-  "length_km": 12.3,
-  "stations_count": 18,
-  "intersections_count": 12,
-  "start_date": "2023-01-15",
-  "end_date": "2025-06-30",
-  "planned_date": null,
-  "budget": 540000000,
+
+  "short_description": "",
+  "description": "",
+
+  "length_km": 0,
+  "stations_count": 0,
+  "intersections_count": 0,
+
+  "start_date": "",
+  "end_date": "",
+  "planned_date": "",
+  "budget": 0,
+
   "images": [
-    {
-      "url": "/images/bhns_l5/render.jpg",
-      "caption": "Vue d’artiste de la station principale."
-    }
+    { "url": "", "caption": "" }
   ],
-  "connected_project_ids": ["BHNS_L6", "STATION_GUELIZ"],
-  "links": ["https://example.com/bhns-l5"]
+
+  "videos": [
+    { "url": "", "title": "" }
+  ],
+
+  "map_style": {
+    "icon": "bus",
+    "color": "#FF8800"
+  },
+
+  "connected_project_ids": [],
+  "links": []
+}
+```
+
+### 5.2 Story Model
+
+```
+{
+  "id": "",
+  "title": "",
+  "summary": "",
+  "chapters": [
+    {
+      "id": "",
+      "title": "",
+      "text": "",
+      "project_ids": [],
+      "map_focus": {}
+    }
+  ]
 }
 ```
 
 ---
 
-## **6. Landing Page Specification (`/`)**
+## 6. Page Specifications
 
-### **6.1 Sections**
+### 6.1 Landing Page
 
-#### **Navbar**
-Links:
-- Projects Overview  
-- Interactive Map → `/map`
+Sections:
+- Hero (title, subtitle, main CTAs)
+- KPIs (Done / In Progress / Future)
+- Categories grid
+- Highlighted flagship projects
+- Short list preview
+- Footer call-to-action to map and story
 
-#### **Hero Section**
-- Title & subtitle
-- Key numbers
-- CTA → `/map`
-- Secondary CTA → scroll to project categories
-
-#### **Key Statistics**
-Generated from `/api/projects`:
-- Total projects
-- Done / In Progress / Future
-- Optional: km of corridors, intersections upgraded
-
-#### **Status Overview**
-Three blocks with:
-- Status summary
-- Project counts
-- Link → `/map?status=...`
-
-#### **Project Highlights**
-Show 3–6 flagship projects with:
-- Image
-- Status
-- Description
-- “View on Map” → `/map?focus=<id>`
-
-#### **Project Categories**
-- BHNS
-- Bus Lines
-- Cycling
-- Traffic Lights
-- Parking
-- Pedestrian zones
-
-Each clickable → `/map?type=<category>`
-
-#### **Projects List Preview**
-- Name
-- Status
-- Type
-- “View on Map”
-
-#### **Final CTA**
-Button → `/map`
+CTA Buttons:
+- “Explore Map”
+- “View Story”
+- “Browse Projects”
 
 ---
 
-## **7. Map Page Specification (`/map`)**
+## 6.2 Map Page (`/map`)
 
-### **7.1 Structure**
-- Map area
-- Side panel with filters + list
-- Detail panel on project click
-
-### **7.2 Map Features**
-- Pan & zoom  
-- Base layers  
-- Markers / lines / polygons  
-- Status color coding:
-  - Green → Done  
-  - Orange → In Progress  
-  - Blue → Future  
-
-### **7.3 Filter Panel**
-Filters by:
-- Status  
-- Type  
-- District  
-- Timeline (year slider)
-
-### **7.4 Project List**
-Shows:
-- Name  
-- Status  
-- Type  
-- District  
-
-Click → select project on the map.
-
-### **7.5 Project Detail Panel**
-Shows:
-- Title  
-- Status  
-- Description  
-- Key metrics  
-- Images  
-- Connectivity list  
-- Button to highlight connected projects  
-
-### **7.6 Corridor Mode**
-Toggle:
-- Fetches `/api/corridors`
-- Shows corridor overlays
+Features:
+- Fully interactive map (Leaflet/Mapbox)
+- Supports:
+  - LineString
+  - Point
+  - Polygon
+- Color based on `map_style` or fallback rules
+- Filters:
+  - Status
+  - Type
+  - District
+  - Timeline slider
+- Left or right drawer with:
+  - Project list
+  - Search
+  - Sorting
+- When clicking a feature:
+  - Open ProjectDetailPanel
+  - Show short description
+  - Show badges
+  - Show image
+  - Button: **“View Full Project Page”**
+  - Button: “Zoom to Project”
+  - Button: “Highlight Connectivity”
 
 ---
 
-## **8. User Flows**
+## 6.3 Storytelling Page (`/story`)
 
-### **8.1 Landing → Map**
-1. User opens `/`
-2. Clicks map button
-3. Goes to `/map`
-4. Selects project → sees details
-
-### **8.2 Highlighted Project → Focused Map**
-1. User clicks highlight card
-2. Goes to `/map?focus=<id>`
-3. Map focuses project
-
-### **8.3 Category → Filtered Map**
-1. User clicks category card
-2. Goes to `/map?type=cycling`
-3. Map filtered
-
-### **8.4 Landing Only**
-User browses list without map.
+Elements:
+- Hero section
+- Timeline component (years/phases)
+- Story cards
+- Chapter detail view
+- Rich text
+- Images
+- Links:
+  - “Open on Map”
+  - “Open Project Page”
+- Cross-navigation:
+  - Previous chapter
+  - Next chapter
 
 ---
 
-## **9. Non-Functional Requirements**
+## 6.4 Project Detail Page (`/projects/:id`)
 
-### **Performance**
-- Cache project list in frontend  
-- Lazy-load images  
-- Efficient map rendering  
+Sections:
 
-### **Responsiveness**
-- Landing and map must work on mobile/tablet/desktop  
-- Collapsible panels on small screens  
+### Header
+- Title
+- Status & Type badges
+- District
+- Last updated
 
-### **Accessibility**
-- Colorblind-safe palette  
-- Keyboard-friendly navigation  
-- ARIA labels  
+### Meta Summary
+- Length, stations, intersections count
+- Start/end/planned dates
+- Budget
 
-### **Localization**
-Must support:
-- French  
-- Arabic  
-- Optional English  
+### Image Gallery
+- Scrollable
+- Captions
+
+### Video Section
+- YouTube / mp4 embeds
+- Thumbnails
+
+### Full Description
+- Rich multi-paragraph text
+- Optionally structured into:
+  - Context
+  - Objectives
+  - Execution
+  - Impact
+
+### Connectivity Section
+- List of related projects
+- Each item with:
+  - “View Project”
+  - “Open on Map”
+
+### Maps & Links
+- Button: **“Open on Interactive Map”**
+- Button: “Back to Story” (if navigation state indicates origin)
 
 ---
 
-## **10. Deliverables**
+## 6.5 Admin Page (`/admin`)
 
-- Flask backend:
-  - `/api/projects`
-  - `/api/projects/<id>`
-  - `/api/corridors`
+### Login
+- Password input
+- Simple session cookie
 
-- React frontend:
-  - Landing page (`/`)
-  - Map page (`/map`)
+### Admin Dashboard
+- Project table:
+  - ID, name, status, type, district
+  - Buttons:
+    - Edit
+    - Delete
+    - View on Map
 
-- JSON dataset
+### Admin Project Editor
+- Form fields:
+  - Name, ID (auto or manual)
+  - Status (dropdown)
+  - Type (dropdown)
+  - District
+  - Short description
+  - Full description
+  - Length, metrics
+  - Dates
+  - Budget
+  - Image URLs list
+  - Video URLs list
+  - Map icon selector
+  - Color picker
+
+### Map Editor
+- Add geometry:
+  - Point
+  - LineString
+  - Polygon (optional)
+- Edit geometry:
+  - Drag vertices
+  - Add/remove segments
+
+All saved to backend via PUT.
 
 ---
 
-## **11. Future Extensions**
-- Admin dashboard  
-- JWT user authentication  
-- Story mode (guided tours)  
-- Realtime project progress data integration  
-- Open Data exports (CSV, GeoJSON)
+## 7. User Flows
+
+### Public
+- Landing → Map  
+- Landing → Story  
+- Landing → Project Page  
+- Map → Project Page  
+- Story → Map  
+- Story → Project Page  
+
+### Admin
+- Login → Dashboard  
+- Dashboard → Create project  
+- Dashboard → Edit project  
+- Dashboard → Delete project  
+
+---
+
+## 8. Non‑Functional Requirements
+
+### Performance
+- Frontend caching
+- Lazy-loading images/videos
+- Optimized geometries
+- DB queries cached
+
+### Security
+- Admin password stored server-side
+- HTTPS mandatory
+- No public write endpoints
+
+### Accessibility
+- Labels + icons
+- Colorblind-safe design
+- ARIA support
+
+### Localization
+- French & Arabic UI support
+- Multi-language content option later
+
+---
+
+## 9. Deliverables
+
+- Full React frontend
+- Full Flask backend
+- Complete API
+- Admin CMS
+- Map layers & geometry editor
+- Complete documentation
 
 ---
 
