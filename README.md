@@ -279,10 +279,13 @@ Features:
   - Type
   - District
   - Timeline slider
+  - projects
+  - points of intrests
 - Left or right drawer with:
   - Project list
   - Search
   - Sorting
+  - when clicking item (project on the drawer it acts as a filter and shows only that project on map)
 - When clicking a feature:
   - Open ProjectDetailPanel
   - Show short description
@@ -435,7 +438,7 @@ All saved to backend via PUT.
 - ARIA support
 
 ### Localization
-- French & Arabic UI support
+- French, English & Arabic UI support
 - Multi-language content option later
 
 ---
@@ -448,5 +451,6 @@ All saved to backend via PUT.
 - Admin CMS
 - Map layers & geometry editor
 - Complete documentation
+- Docker files for deployment
 
 ---
