@@ -187,6 +187,7 @@ Deletes project.
   "id": "BHNS_L5",
   "name": "Ligne BHNS L5",
   "status": "in_progress",
+  "progress_status":"30%",
   "type": "bhns",
   "district": "Gueliz",
 
