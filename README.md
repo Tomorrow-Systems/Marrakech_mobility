@@ -5,7 +5,7 @@
 1. [Prise en main](#1-prise-en-main)
 2. [Aperçu du tableau de bord Admin](#2-aper%C3%A7u-du-tableau-de-bord-admin)
 3. [Gestion des projets](#3-gestion-des-projets)
-4. [Gestion des récits](#4-gestion-des-r%C3%A9cits)
+4. [Gestion des Histoires](#4-gestion-des-r%C3%A9cits)
 5. [Gestion de l'infrastructure](#5-gestion-de-linfrastructure)
 6. [Gestion des groupes](#6-gestion-des-groupes)
 7. [Utilisation de l'éditeur de carte](#7-utilisation-de-l%C3%A9diteur-de-carte)
@@ -36,7 +36,7 @@
 Après connexion, vous verrez :
 
 - **En-tête** : affiche votre nom d'utilisateur, le bouton Accueil et le bouton Déconnexion
-- **Onglets** : Projets, Récits, Infrastructure, Groupes, Paramètres
+- **Onglets** : Projets, Histoires, Infrastructure, Groupes, Paramètres
 - **Bouton Éditeur de Carte** : bouton orange/aux couleurs d'accent pour accéder à l'éditeur de carte
 - **Boutons d'action** : boutons spécifiques au contexte (Nouveau Projet, Nouveau Récit, etc.)
 
@@ -49,9 +49,9 @@ Après connexion, vous verrez :
 | Onglet | But |
 |-----|---------|
 | **Projets** | Gérer les projets de mobilité |
-| **Récits** | Créer du contenu narratif avec des chapitres |
+| **Histoires** | Créer du contenu narratif avec des chapitres |
 | **Infrastructure** | Gérer les points d'infrastructure |
-| **Groupes** | Organiser projets et récits en groupes |
+| **Groupes** | Organiser projets et Histoires en groupes |
 | **Paramètres** | Configurer l'identité, la langue, les couches cartographiques |
 
 ### 2.2 Actions courantes
@@ -185,11 +185,11 @@ Contrôlez l'ordre d'apparition des projets :
 
 ---
 
-## 4. Gestion des récits
+## 4. Gestion des Histoires
 
-### 4.1 Comprendre les récits
+### 4.1 Comprendre les Histoires
 
-Les récits (Stories) sont du contenu narratif qui peut s'étendre sur plusieurs chapitres. Chaque récit peut :
+Les Histoires (Stories) sont du contenu narratif qui peut s'étendre sur plusieurs chapitres. Chaque récit peut :
 - Avoir une image de couverture
 - Contenir plusieurs chapitres
 - Lier des projets et de l'infrastructure
@@ -197,7 +197,7 @@ Les récits (Stories) sont du contenu narratif qui peut s'étendre sur plusieurs
 
 ### 4.2 Création d'un nouveau récit
 
-1. Cliquez sur l'onglet **Récits**
+1. Cliquez sur l'onglet **Histoires**
 2. Cliquez sur le bouton **New Story**
 3. Remplissez les détails du récit :
 
@@ -248,11 +248,11 @@ Utilisez les poignées de glisser-déposer ou le champ d'ordre pour arranger les
 2. Entrez latitude, longitude et niveau de zoom
 3. Quand les lecteurs consultent ce chapitre, la carte se centrera sur cet emplacement
 
-### 4.5 Publication des récits
+### 4.5 Publication des Histoires
 
-Les récits ont un statut publié/non publié :
+Les Histoires ont un statut publié/non publié :
 
-- **Published** : Visible sur la page publique des récits
+- **Published** : Visible sur la page publique des Histoires
 - **Unpublished** : Visible uniquement en admin
 
 Basculer l'interrupteur **Published** pour contrôler la visibilité.
@@ -304,7 +304,7 @@ Pour les marqueurs sur la carte, vous pouvez ajouter des informations qui appara
 
 ### 6.1 Comprendre les groupes
 
-Les groupes aident à organiser projets et récits en catégories. Ils fournissent :
+Les groupes aident à organiser projets et Histoires en catégories. Ils fournissent :
 - Des filtres sur les pages publiques
 - Un contrôle de visibilité pour plusieurs éléments
 - Une organisation pour un grand nombre d'éléments
@@ -324,14 +324,14 @@ Les groupes aident à organiser projets et récits en catégories. Ils fournisse
 | **Hidden Projects** | Projets dans le groupe mais non affichés |
 | **Visible** | Afficher/masquer le groupe entier |
 
-### 6.3 Groupes de récits
+### 6.3 Groupes de Histoires
 
-Similaire aux groupes de projets mais pour les récits :
+Similaire aux groupes de projets mais pour les Histoires :
 
 1. Cliquez sur l'onglet **Groups**
 2. Sélectionnez **Story Groups**
 3. Cliquez sur **New Group**
-4. Ajoutez des récits au groupe
+4. Ajoutez des Histoires au groupe
 
 ### 6.4 Contrôle de visibilité
 
@@ -571,7 +571,7 @@ Sauvegardez régulièrement toutes vos données :
 
 La sauvegarde inclut :
 - Tous les projets
-- Tous les récits et chapitres
+- Tous les Histoires et chapitres
 - Toute l'infrastructure
 - Tous les groupes
 - Tous les paramètres
@@ -632,10 +632,10 @@ La page projets (`/projects`) affiche :
 - Fonctionnalité de recherche
 - Cliquez pour voir le détail complet
 
-### 10.4 Page des récits
+### 10.4 Page des Histoires
 
-La page récits (`/story`) affiche :
-- Carrousel de cartes de récits
+La page Histoires (`/story`) affiche :
+- Carrousel de cartes de Histoires
 - Filtrage par groupe avec badges
 - Cliquez pour lire le récit complet avec chapitres
 - Navigation entre les chapitres
@@ -647,7 +647,7 @@ Les pages de projet individuelles affichent :
 - Sections images Avant/Après
 - Description et objectifs
 - Indicateurs du projet
-- Récits liés
+- Histoires liés
 - Vidéos (intégration YouTube)
 - Emplacement sur la carte
 
@@ -664,7 +664,7 @@ Lors de la visualisation d'images :
 - Cliquez sur une image pour l'ouvrir en plein écran
 - Utilisez les flèches pour naviguer entre les images
 - Cliquez en dehors ou appuyez sur Échap pour fermer
-- Fonctionne sur les pages de projet, les récits et les panneaux de carte
+- Fonctionne sur les pages de projet, les Histoires et les panneaux de carte
 
 ---
 
